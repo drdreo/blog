@@ -17,19 +17,13 @@
                             </a>
                         </h2>
                         <div class="flex flex-wrap">
-                            <a
-                                class="mr-3 text-sm font-medium uppercase text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                            >next-js</a
-                            ><a
-                            class="mr-3 text-sm font-medium uppercase text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                        >tailwind</a
-                        ><a
-                            class="mr-3 text-sm font-medium uppercase text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                        >guide</a
-                        ><a
-                            class="mr-3 text-sm font-medium uppercase text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                        >feature</a
-                        >
+                            @for (tag of post.attributes.tags; track tag) {
+                                <a
+                                    class="mr-3 text-sm font-medium uppercase text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
+                                >
+                                    {{ tag }}
+                                </a>
+                            }
                         </div>
                     </div>
                     <div class="prose max-w-none text-gray-500 dark:text-gray-400">
@@ -39,8 +33,8 @@
                 <div class="text-base font-medium leading-6">
                     <a
                         class="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                        aria-label='Read more: "Release of Tailwind Nextjs Starter Blog v2.0"'
-                        [routerLink]="['/', post.attributes.slug]"
+                        [attr.aria-label]="'Read more: ' + post.attributes.title"
+                        [routerLink]="post.attributes.slug"
                     >
                         Read more →
                     </a>
