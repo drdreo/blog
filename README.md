@@ -1,10 +1,7 @@
 # Blog
 
+UI Inspiration  https://tailwind-nextjs-starter-blog.vercel.app/
 This project was generated with [Analog](https://analogjs.org), the fullstack meta-framework for Angular.
-
-## Setup
-
-Run `pnpm install` to install the application dependencies.
 
 ## Development
 
@@ -18,5 +15,8 @@ Run `npm run build` to build the client/server project. The client build artifac
 
 Run `npm run test` to run unit tests with [Vitest](https://vitest.dev).
 
-### Inspi
-https://tailwind-nextjs-starter-blog.vercel.app/
+# Writing Articles
+
+## Draft
+
+Mark a post as a draft by setting `draft: true` in the front matter. Drafts are only visible in development mode.
