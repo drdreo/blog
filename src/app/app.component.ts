@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterLink, RouterOutlet],
+    imports: [RouterOutlet],
     template: `
         <section class="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0 relative">
             <nav
