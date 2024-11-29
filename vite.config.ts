@@ -15,6 +15,12 @@ export default defineConfig(({ mode }) => ({
         analog({
             content: {
                 highlighter: 'shiki',
+                shikiOptions: {
+                    highlighter: {
+                        // add more languages
+                        additionalLangs: ['shellscript'],
+                    },
+                },
             },
             prerender: {
                 sitemap: {

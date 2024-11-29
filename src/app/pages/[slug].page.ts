@@ -14,12 +14,13 @@ import PostAttributes from '../post-attributes';
                 @if (post.attributes.coverImage) {
                     <img class="post__image" [src]="post.attributes.coverImage" alt="blog cover image" />
                 }
-                <analog-markdown [content]="post.content" />
+                <analog-markdown class="markdown-body" [content]="post.content" />
             </article>
         }
     `,
     styles: `
         .post__image {
+            margin-bottom: 1rem;
             max-height: 40vh;
         }
     `,
