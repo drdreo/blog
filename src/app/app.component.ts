@@ -11,7 +11,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
                 class="flex items-center w-full sticky py-10 top-10 justify-between rounded-lg transition-colors -mx-20"
             >
                 <a
-                    routerLink="/"
+                    href="#top"
                     class="text-xl font-thin  text-gray-800 dark:text-gray-100 hover:text-amber-400 transition-colors"
                 >
                     Home
