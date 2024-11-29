@@ -1,0 +1,7 @@
+# Allow all search engines to crawl the entire site
+User-agent: *
+Disallow: /admin/  # Block access to any admin-related URLs or paths
+Disallow: /login/  # Block login pages
+
+# Sitemap location (optional, but recommended for better indexing)
+Sitemap: https://blog.drdreo.com/sitemap.xml
