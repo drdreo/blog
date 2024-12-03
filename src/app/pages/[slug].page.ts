@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, DatePipe } from '@angular/common';
 import { injectContent, MarkdownComponent } from '@analogjs/content';
 
 import PostAttributes from '../post-attributes';
@@ -7,13 +7,23 @@ import PostAttributes from '../post-attributes';
 @Component({
     selector: 'app-blog-post',
     standalone: true,
-    imports: [AsyncPipe, MarkdownComponent],
+    imports: [AsyncPipe, MarkdownComponent, DatePipe],
     template: `
         @if (post$ | async; as post) {
             <article>
+                <div class="flex justify-center flex-col items-center">
+                    <h1 class="text-5xl">{{ post.attributes.title }}</h1>
+
+                    <time
+                        class="text-xs dark:text-slate-400 text-slate-600 pb-2"
+                        [attr.datetime]="post.attributes.date | date: 'YYYY-MM-dd'"
+                        >{{ post.attributes.date | date: 'dd.MM.YYYY' }}
+                    </time>
+                </div>
                 @if (post.attributes.coverImage) {
                     <img class="post__image" [src]="post.attributes.coverImage" alt="blog cover image" />
                 }
+
                 <analog-markdown class="markdown-body" [content]="post.content" />
             </article>
         }
@@ -22,6 +32,7 @@ import PostAttributes from '../post-attributes';
         .post__image {
             margin-bottom: 1rem;
             max-height: 40vh;
+            justify-self: center;
         }
     `,
 })
