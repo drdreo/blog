@@ -3,6 +3,7 @@ title: "OpenTelemetry: a customizable standard"
 slug: opentelemetry-custom-2024
 description: Second Test Description
 date: 2024-12-27
+draft: true
 tags:
   - test
   - example

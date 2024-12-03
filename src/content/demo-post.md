@@ -3,6 +3,7 @@ title: Example Markdown Post
 slug: markdown-demo
 description: Second Test Description
 date: 2024-12-27
+draft: true
 tags:
   - test
   - example
