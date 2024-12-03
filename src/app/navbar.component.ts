@@ -1,16 +1,14 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, NavigationEnd, Router, RouterLink } from '@angular/router';
-import { filter } from 'rxjs';
+import { filter, map } from 'rxjs';
 
 @Component({
     selector: 'blog-nav',
     standalone: true,
     imports: [RouterLink],
     template: `
-        <nav
-            [class.-mx-20]="isOnBlogPage()"
-            class="flex items-center w-full sticky py-10 top-10 justify-between rounded-lg transition-all"
-        >
+        <nav [class]="navClass()">
             <a
                 routerLink="/"
                 class="text-xl font-thin  text-gray-800 dark:text-gray-100 hover:text-amber-400 transition-colors"
@@ -25,14 +23,26 @@ import { filter } from 'rxjs';
 export class NavbarComponent {
     private router = inject(Router);
     private route = inject(ActivatedRoute);
-    isOnBlogPage = signal(false);
+    isOnBlogPage = toSignal(
+        this.router.events.pipe(
+            filter((event) => event instanceof NavigationEnd),
+            map(() => {
+                const root = this.route.root;
+                const isRoot = root.children.length === 0 || root.firstChild?.snapshot.url.length === 0;
+                return !isRoot;
+            }),
+        ),
+    );
 
-    constructor() {
-        this.router.events.pipe(filter((event) => event instanceof NavigationEnd)).subscribe((event) => {
-            console.log(event);
-            const root = this.route.root;
-            const isRoot = root.children.length === 0 || root.firstChild?.snapshot.url.length === 0;
-            this.isOnBlogPage.set(!isRoot);
-        });
-    }
+    navClass = computed(() => {
+        const isOnBlogPage = this.isOnBlogPage();
+        let classes = 'flex items-center w-full py-10 justify-between rounded-lg transition-all ';
+        const blogClasses = 'sticky top-0 -mx-20';
+        if (isOnBlogPage) {
+            classes += blogClasses;
+        }
+        return classes;
+    });
+
+    constructor() {}
 }
