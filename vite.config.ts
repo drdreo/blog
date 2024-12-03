@@ -1,7 +1,8 @@
 /// <reference types="vitest" />
 
-import { defineConfig } from 'vite';
 import analog, { PrerenderContentFile } from '@analogjs/platform';
+import { defineConfig } from 'vite';
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
@@ -41,6 +42,11 @@ export default defineConfig(({ mode }) => ({
                         },
                     },
                 ],
+            },
+        }),
+        ViteImageOptimizer({
+            jpg: {
+                quality: 80,
             },
         }),
     ],
