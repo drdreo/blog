@@ -48,6 +48,18 @@ export default defineConfig(({ mode }) => ({
             jpg: {
                 quality: 80,
             },
+            svg: {
+                plugins: [
+                    {
+                        name: 'preset-default',
+                        params: {
+                            overrides: {
+                                inlineStyles: false,
+                            },
+                        },
+                    },
+                ],
+            },
         }),
     ],
     test: {
