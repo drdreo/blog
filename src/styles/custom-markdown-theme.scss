@@ -56,17 +56,17 @@ $radius: 8px;
     h5 {
         font-size: 0.875em;
     }
-    
+
     h6 {
         font-size: 0.85em;
     }
-    
+
     /* Paragraphs */
     p {
         font-size: 1rem;
         margin: 1rem 0;
     }
-    
+
     /* Lists */
     ul,
     ol {
@@ -74,53 +74,53 @@ $radius: 8px;
         margin-bottom: 0;
         padding-left: 2em;
     }
-    
+
     ol ol,
     ul ol {
         list-style-type: lower-roman;
     }
-    
+
     ul ul ol,
     ul ol ol,
     ol ul ol,
     ol ol ol {
         list-style-type: lower-alpha;
     }
-    
+
     dd {
         margin-left: 0;
     }
-    
+
     ul.no-list,
     ol.no-list {
         padding: 0;
         list-style-type: none;
     }
-    
+
     ol[type="a s"] {
         list-style-type: lower-alpha;
     }
-    
+
     ol[type="A s"] {
         list-style-type: upper-alpha;
     }
-    
+
     ol[type="i s"] {
         list-style-type: lower-roman;
     }
-    
+
     ol[type="I s"] {
         list-style-type: upper-roman;
     }
-    
+
     ol[type="1"] {
         list-style-type: decimal;
     }
-    
+
     div > ol:not([type]) {
         list-style-type: decimal;
     }
-    
+
     ul ul,
     ul ol,
     ol ol,
@@ -128,19 +128,19 @@ $radius: 8px;
         margin-top: 0;
         margin-bottom: 0;
     }
-    
+
     li > p {
         margin-top: 1rem;
     }
-    
+
     li + li {
         margin-top: 0.25em;
     }
-    
+
     dl {
         padding: 0;
     }
-    
+
     dl dt {
         padding: 0;
         margin-top: 1rem;
@@ -148,25 +148,25 @@ $radius: 8px;
         font-style: italic;
         font-weight: 600;
     }
-    
+
     dl dd {
         padding: 0 1rem;
         margin-bottom: 1rem;
     }
-    
+
     /* Links */
     a {
         color: $color-primary;
         text-decoration: none;
         border-bottom: 1px dashed $color-primary;
         transition: all 0.2s;
-        
+
         &:hover {
             color: darken($color-primary, 10%);
             border-bottom: 1px solid darken($color-primary, 10%);
         }
     }
-    
+
     /* Blockquotes */
     blockquote {
         border-left: 2px solid $color-primary;
@@ -178,7 +178,7 @@ $radius: 8px;
         @apply dark:text-gray-200;
         font-style: italic;
     }
-    
+
     /* Code */
     pre:not(.shiki) {
         font-family: "Courier New", monospace;
@@ -187,18 +187,18 @@ $radius: 8px;
         padding: 0.2rem 0.4rem;
         border-radius: $radius;
     }
-    
+
     pre {
         overflow-x: auto;
         border-left: 1px solid $color-primary;
-        
+
         padding: 1rem;
         overflow: auto;
         font-size: 85%;
         line-height: 1.45;
         border-radius: 6px;
     }
-    
+
     /* Tables */
     table {
         display: block;
@@ -212,16 +212,16 @@ $radius: 8px;
         margin-bottom: 1rem;
         border-spacing: 0;
         border-collapse: collapse;
-        
+
         thead,
         tbody {
             box-sizing: border-box;
         }
-        
+
         th {
             font-weight: 600;
         }
-        
+
         th,
         td {
             padding: 6px 13px;
@@ -229,39 +229,40 @@ $radius: 8px;
             @apply border-[#c2bbb2];
             @apply dark:border-[#3d444d];
         }
-        
+
         td > :last-child {
             margin-bottom: 0;
         }
-        
+
         tr {
             @apply bg-[#f2eee8];
             @apply dark:bg-[#0d1117];
-            
+
             @apply border border-solid;
             @apply border-[#bbb24cb3];
             @apply dark:border-[#3d444db3];
         }
-        
+
         tr:nth-child(2n) {
             @apply bg-[#eae4dc];
             @apply dark:bg-[#151b23];
         }
-        
+
         img {
             background-color: transparent;
         }
     }
-    
+
     /* Images */
     img {
         max-width: 100%;
         height: auto;
         border-radius: $radius;
-        margin: 1rem 0;
+        display: block;
+        margin: auto;
         box-shadow: $shadow-card;
     }
-    
+
     /* Horizontal Rules */
     hr {
         @apply border border-solid;
