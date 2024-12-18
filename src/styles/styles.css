@@ -6,6 +6,13 @@
 @tailwind components;
 @tailwind utilities;
 
+
+@layer base {
+    ul, ol {
+        list-style: revert;
+    }
+}
+
 /* You can add global styles to this file, and also import other style files */
 :root {
     font-feature-settings: normal;

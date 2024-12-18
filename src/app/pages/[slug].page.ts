@@ -1,37 +1,16 @@
-import { MetaTag, RouteMeta } from "@analogjs/router";
-import { Component } from '@angular/core';
-import { AsyncPipe, DatePipe } from '@angular/common';
 import { injectContent, MarkdownComponent } from '@analogjs/content';
-import { ResolveFn } from "@angular/router";
+import { MetaTag, RouteMeta } from "@analogjs/router";
+import { AsyncPipe, DatePipe } from '@angular/common';
+import { Component } from '@angular/core';
+import { ResolveFn } from '@angular/router';
 
 import PostAttributes from '../post-attributes';
+import {  postMetaResolver, postTitleResolver } from "../resolvers";
 
-// export const postMetaResolver: ResolveFn<MetaTag[]> = (route) => {
-//   const postAttributes = injectActivePostAttributes(route);
-//
-//   return [
-//     {
-//       name: 'description',
-//       content: postAttributes.description,
-//     },
-//     {
-//       name: 'author',
-//       content: 'Analog Team',
-//     },
-//     {
-//       property: 'og:title',
-//       content: postAttributes.title,
-//     },
-//     {
-//       property: 'og:description',
-//       content: postAttributes.description,
-//     },
-//     {
-//       property: 'og:image',
-//       content: postAttributes.coverImage,
-//     },
-//   ];
-// };
+export const routeMeta: RouteMeta = {
+    title: postTitleResolver,
+    meta: postMetaResolver,
+};
 
 @Component({
     selector: 'app-blog-post',
@@ -62,7 +41,7 @@ import PostAttributes from '../post-attributes';
             max-height: 40vh;
             justify-self: center;
         }
-    `
+    `,
 })
 export default class BlogPostComponent {
     readonly post$ = injectContent<PostAttributes>('slug');
