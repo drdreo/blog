@@ -46,6 +46,7 @@ Excerpt from from [their docs](https://opentelemetry.io/):
 It somewhat struck me that they have to explicitly mention that they are are _suitable for production_ -- Which software isn't, right?!
 
 Long story short; OpenTelemetry is an open, community-driven standard that unifies all central pieces to observability. It emerged by merging two standards (reference to the xkcd meme) [OpenTracing](https://opentracing.io/) and [OpenCensus](https://opencensus.io/) into one.
+
 ![ot_custom_xkcd_standards](/images/ot_custom_xkqc_standards.png)
 
 ### The Three Pillars of Observability
@@ -84,6 +85,7 @@ We just have to go as deep into the standard as to be able to use the provided A
 ## Custom Logging
 
 Anything that can be logged as a string goes here.
+
 ![ot_custom_log_meme](/images/ot_custom_log_meme.png)
 
 ```js

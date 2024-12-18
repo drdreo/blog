@@ -1,5 +1,5 @@
 import { injectContentFiles } from '@analogjs/content';
-import { Component, effect } from '@angular/core';
+import { Component } from '@angular/core';
 import { BlogListEntryComponent } from '../blog-list-entry/blog-list-entry.component';
 
 import PostAttributes from '../post-attributes';
@@ -20,7 +20,7 @@ import { LogoComponent } from './index/logo/logo.component';
             <p class="text-lg leading-7 text-gray-500 dark:text-gray-400">Created with Analog & Tailwind</p>
         </div>
 
-        <ul class="divide-y divide-gray-200 dark:divide-gray-700">
+        <ul class="divide-y divide-gray-200 dark:divide-gray-700 list-none">
             @for (post of posts; track post.attributes.slug) {
                 <blog-list-entry [post]="post"></blog-list-entry>
             }
@@ -29,10 +29,6 @@ import { LogoComponent } from './index/logo/logo.component';
 })
 export default class BlogComponent {
     readonly posts = injectContentFiles<PostAttributes>().filter(
-        (post) => !post.attributes.draft || window.location.href.includes('localhost')
+        (post) => !post.attributes.draft || import.meta.env.DEV
     );
-
-    constructor() {
-        console.log(this.posts);
-    }
 }
