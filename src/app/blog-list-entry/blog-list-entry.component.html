@@ -5,8 +5,8 @@
             <dl>
                 <dt class="sr-only">Published on</dt>
                 <dd class="text-base font-medium leading-6 text-gray-500">
-                    <time
-                        [attr.datetime]="post.attributes.date | date: 'YYYY-MM-dd'">{{ post.attributes.date | date: "dd.MM.YYYY" }}
+                    <time [attr.datetime]="post.attributes.date | date: 'YYYY-MM-dd'"
+                        >{{ post.attributes.date | date: "dd.MM.YYYY" }}
                     </time>
                 </dd>
             </dl>

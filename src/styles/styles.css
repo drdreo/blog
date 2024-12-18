@@ -1,14 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap');
-@import './markdown-content.scss';
+@import url("https://fonts.googleapis.com/css2?family=Onest:wght@100..900&display=swap");
+@import "./markdown-content.scss";
 
 /* Tailwind directives  */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
-    ul, ol {
+    ul,
+    ol {
         list-style: revert;
     }
 }

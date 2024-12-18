@@ -21,7 +21,7 @@ export default async function render(url: string, document: string, serverContex
     const html = await renderApplication(bootstrap, {
         document,
         url,
-        platformProviders: [provideServerContext(serverContext)],
+        platformProviders: [provideServerContext(serverContext)]
     });
 
     return html;

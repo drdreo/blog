@@ -1,4 +1,4 @@
-@use 'sass:color';
+@use "sass:color";
 
 /* Variables for easy customization */
 $font-main: "Onest", sans-serif;
@@ -36,8 +36,7 @@ $radius: 8px;
         padding-bottom: 0.3em;
         font-size: 2em;
         color: $color-primary;
-        border-bottom: 1px solid color.adjust($color-primary, $alpha: -0.8)
-    ;
+        border-bottom: 1px solid color.adjust($color-primary, $alpha: -0.8);
     }
 
     h2 {

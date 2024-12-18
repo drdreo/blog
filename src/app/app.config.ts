@@ -11,6 +11,6 @@ export const appConfig: ApplicationConfig = {
         provideFileRouter(),
         provideHttpClient(withFetch(), withInterceptors([requestContextInterceptor])),
         provideClientHydration(),
-        provideContent(withMarkdownRenderer(), withShikiHighlighter()),
-    ],
+        provideContent(withMarkdownRenderer(), withShikiHighlighter())
+    ]
 };

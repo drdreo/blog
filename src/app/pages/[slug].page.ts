@@ -1,15 +1,14 @@
 import { injectContent, MarkdownComponent } from '@analogjs/content';
-import { MetaTag, RouteMeta } from "@analogjs/router";
+import { RouteMeta } from '@analogjs/router';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { ResolveFn } from '@angular/router';
 
 import PostAttributes from '../post-attributes';
-import {  postMetaResolver, postTitleResolver } from "../resolvers";
+import { postMetaResolver, postTitleResolver } from '../resolvers';
 
 export const routeMeta: RouteMeta = {
     title: postTitleResolver,
-    meta: postMetaResolver,
+    meta: postMetaResolver
 };
 
 @Component({
@@ -41,7 +40,7 @@ export const routeMeta: RouteMeta = {
             max-height: 40vh;
             justify-self: center;
         }
-    `,
+    `
 })
 export default class BlogPostComponent {
     readonly post$ = injectContent<PostAttributes>('slug');

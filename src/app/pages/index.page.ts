@@ -28,10 +28,11 @@ import { LogoComponent } from './index/logo/logo.component';
     `
 })
 export default class BlogComponent {
-    readonly posts = injectContentFiles<PostAttributes>().filter(post=> !post.attributes.draft);
-
+    readonly posts = injectContentFiles<PostAttributes>().filter(
+        (post) => !post.attributes.draft || window.location.href.includes('localhost')
+    );
 
     constructor() {
-      console.log(this.posts);
+        console.log(this.posts);
     }
 }

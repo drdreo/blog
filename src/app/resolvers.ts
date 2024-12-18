@@ -15,7 +15,7 @@ export function injectActivePostAttributes(route: ActivatedRouteSnapshot): PostA
     return file!.attributes;
 }
 
-export const postTitleResolver: ResolveFn<string> = (route) => injectActivePostAttributes(route).title;
+export const postTitleResolver: ResolveFn<string> = (route) => injectActivePostAttributes(route).title + ' | DrDreo';
 
 export const postMetaResolver: ResolveFn<MetaTag[]> = (route) => {
     const postAttributes = injectActivePostAttributes(route);
@@ -24,32 +24,32 @@ export const postMetaResolver: ResolveFn<MetaTag[]> = (route) => {
     return [
         {
             name: 'description',
-            content: postAttributes.description,
+            content: postAttributes.description
         },
         {
             name: 'author',
-            content: 'DrDreo',
+            content: 'DrDreo'
         },
         {
             property: 'og:title',
-            content: postAttributes.title,
+            content: postAttributes.title + ' | DrDreo'
         },
         {
             property: 'og:description',
-            content: postAttributes.description,
+            content: postAttributes.description
         },
 
         ...(imageUrl
             ? [
                   {
                       property: 'og:image',
-                      content: imageUrl,
+                      content: imageUrl
                   },
                   {
                       property: 'twitter:image',
-                      content: imageUrl,
-                  },
+                      content: imageUrl
+                  }
               ]
-            : []),
+            : [])
     ];
 };

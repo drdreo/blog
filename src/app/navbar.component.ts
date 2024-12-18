@@ -29,8 +29,8 @@ export class NavbarComponent {
                 const root = this.route.root;
                 const isRoot = root.children.length === 0 || root.firstChild?.snapshot.url.length === 0;
                 return !isRoot;
-            }),
-        ),
+            })
+        )
     );
 
     navClass = computed(() => {

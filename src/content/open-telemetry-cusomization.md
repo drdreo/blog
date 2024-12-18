@@ -3,13 +3,12 @@ title: "OpenTelemetry: a customizable standard"
 slug: opentelemetry-custom-2024
 description: Customizing the OT
 date: 2024-12-27
-draft: false
+draft: true
 tags:
-    - OpenTelemetry
+    - open-telemetry
     - JavaScript
-    - markdown
-    - blog
-    - post
+    - observability
+    - standards
 coverImage: /demo-post_cover.jpg
 ---
 
@@ -98,8 +97,8 @@ function handleCriticalEvent(eventType, details) {
         body: `Critical event occurred: ${eventType}`,
         attributes: {
             "event.type": eventType,
-            "event.details": JSON.stringify(details),
-        },
+            "event.details": JSON.stringify(details)
+        }
     });
 }
 ```
@@ -127,7 +126,7 @@ async function processUserOrder(userId, orderDetails) {
         span.recordException(error);
         span.setStatus({
             code: opentelemetry.SpanStatusCode.ERROR,
-            message: error.message,
+            message: error.message
         });
     } finally {
         span.end();
@@ -145,12 +144,12 @@ const meter = opentelemetry.metrics.getMeter("performance-meter");
 
 // Track API request duration
 const requestDuration = meter.createHistogram("api_request_duration", {
-    description: "Tracks the duration of API requests",
+    description: "Tracks the duration of API requests"
 });
 
 function measureApiRequestTime(duration, endpoint) {
     requestDuration.record(duration, {
-        "api.endpoint": endpoint,
+        "api.endpoint": endpoint
     });
 }
 ```
