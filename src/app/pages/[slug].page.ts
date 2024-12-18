@@ -1,8 +1,37 @@
+import { MetaTag, RouteMeta } from "@analogjs/router";
 import { Component } from '@angular/core';
 import { AsyncPipe, DatePipe } from '@angular/common';
 import { injectContent, MarkdownComponent } from '@analogjs/content';
+import { ResolveFn } from "@angular/router";
 
 import PostAttributes from '../post-attributes';
+
+// export const postMetaResolver: ResolveFn<MetaTag[]> = (route) => {
+//   const postAttributes = injectActivePostAttributes(route);
+//
+//   return [
+//     {
+//       name: 'description',
+//       content: postAttributes.description,
+//     },
+//     {
+//       name: 'author',
+//       content: 'Analog Team',
+//     },
+//     {
+//       property: 'og:title',
+//       content: postAttributes.title,
+//     },
+//     {
+//       property: 'og:description',
+//       content: postAttributes.description,
+//     },
+//     {
+//       property: 'og:image',
+//       content: postAttributes.coverImage,
+//     },
+//   ];
+// };
 
 @Component({
     selector: 'app-blog-post',

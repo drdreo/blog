@@ -1,249 +1,166 @@
 ---
 title: "OpenTelemetry: a customizable standard"
 slug: opentelemetry-custom-2024
-description: Second Test Description
+description: Customizing the OT
 date: 2024-12-27
-draft: true
+draft: false
 tags:
-  - test
-  - example
+  - OpenTelemetry
+  - JavaScript
   - markdown
   - blog
   - post
 coverImage: /demo-post_cover.jpg
 ---
 
----
-__Advertisement :)__
+Have you ever had the pleasure to SSH into 15 different servers to extract the log files? - No? Good.
+Did you ever fail to copy and paste an error message or stack trace from said servers to google it? - No? Gut.
+Have you ever tried to find out which entity called your server? - No? Gud.
 
-- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image
-  resize in browser.
-- __[babelfish](https://github.com/nodeca/babelfish/)__ - developer friendly
-  i18n with plurals support and easy syntax.
+If you can answer these questions with *No*, you are either in the pleasure of an observability tool already or have no care for such things.
+If you answered these with yes -- I feel with you, and I hope you no longer have to.
 
-You will like those projects!
+In the world of modern, distributed systems, traditional debugging sucks or is even impossible to get the job done. Applications are no longer simple, linear processes but a complex web of services, microservices, frontends calling backends and backends calling frontends.
 
----
+There are a ton of valid reasons why one needs observability, but likely as many to standardize it.
 
-# h1 Heading 8-)
+Many Software observability tools popped up over the years. All with their own take and twist to the three pillars of observability:
+- Tracing,
+- Logging and.
+- Metrics
 
-## h2 Heading
+NewRelic, DataDog, Sentry, ApplicationInsights, Dynatrace just to name a few.
 
-### h3 Heading
+In the following few minutes, I will shortly explain what OpenTelemetry (OT) tries to solve and what these three pillars -- Tracing, Logging and Metrics -- entail.
+Although, I want to highlight that way better articles exist that go more into the What and Why of OT, rather than the How.
+Therefore, my focus here is on customizability and i will demonstrate how one can utilize the standard to create your own rules over data ingestion and lastly will provide a hidden joke. Keep reading.
 
-#### h4 Heading
+## What is this open telekinesis?
+Excerpt from from [their docs](https://opentelemetry.io/):
 
-##### h5 Heading
+>OpenTelemetry is a collection of APIs, SDKs, and tools. Use it to instrument, generate, collect, and export telemetry data (metrics, logs, and traces) to help you analyze your software’s performance and behavior.
 
-###### h6 Heading
+> OpenTelemetry is [generally available](https://opentelemetry.io/status/) across [several languages](https://opentelemetry.io/docs/languages/) and is suitable for production use.
 
-## Horizontal Rules
+It somewhat struck me that they have to explicitly mention that they are are *suitable for production* -- Which software isn't, right?!
 
-___
-
----
-
-***
-
-## Typographic replacements
-
-Enable typographer option to see result.
-
-(c) (C) (r) (R) (tm) (TM) (p) (P) +-
-
-test.. test... test..... test?..... test!....
-
-!!!!!! ???? ,, -- ---
-
-"Smartypants, double quotes" and 'single quotes'
-
-## Emphasis
-
-**This is bold text**
-
-__This is bold text__
-
-*This is italic text*
-
-_This is italic text_
-
-~~Strikethrough~~
-
-## Blockquotes
-
-> Blockquotes can also be nested...
->> ...by using additional greater-than signs right next to each other...
-> > > ...or with spaces between arrows.
-
-## Lists
-
-Unordered
-
-+ Create a list by starting a line with `+`, `-`, or `*`
-+ Sub-lists are made by indenting 2 spaces:
-    - Marker character change forces new list start:
-        * Ac tristique libero volutpat at
-
-        + Facilisis in pretium nisl aliquet
-
-        - Nulla volutpat aliquam velit
-+ Very easy!
-
-Ordered
-
-1. Lorem ipsum dolor sit amet
-2. Consectetur adipiscing elit
-3. Integer molestie lorem at massa
+Long story short; OpenTelemetry is an open, community-driven standard that unifies all central pieces to observability. It emerged by merging two standards (reference to the xkcd meme) [OpenTracing](https://opentracing.io/) and [OpenCensus](https://opencensus.io/) into one.
+![ot_custom_xkcd_standards](/images/ot_custom_xkqc_standards.png)
 
 
-1. You can use sequential numbers...
-1. ...or keep all the numbers as `1.`
+### The Three Pillars of Observability
 
-Start numbering with offset:
+OpenTelemetry focuses on three key types of telemetry data:
 
-57. foo
-1. bar
+1. **Tracing**: Tracks the journey of a request through different services
+2. **Logging**: Captures discrete events and messages
+3. **Metrics**: Measures system performance and key indicators
 
-## Code
 
-Inline `code`
+## First custom, then standard, then custom again?!
 
-Indented code
+Yes, but it was just bait after all. Lets take a step back first.
 
-    // Some comments
-    line 1 of code
-    line 2 of code
-    line 3 of code
+Initially I mentioned accessing server log files manually. While for some this sounds just like a horror story from the 80s, for some it still is reality. We feel with you. Introducing a fancy logging product that all your servers log to sounds amazing for this case - if regulations allow for that. Not everyone has the freedom to recklessly send data around the globe. Who really knows where these monitoring providers put there data. Once it gets as far as setting up contracts with data
 
-Block code "fences"
 
-```
-Sample text here...
+Depending on all the fancy monitoring vendors out there to get you the insights you need might not be the best idea after all.
+
+Picture this; You are working at a company with Sentry for frontend application logging, Azure Application Insights for backend apps, Grafana for dashboarding, a few dashboards in Tableau and sprinkle some DataDog in there for on-call alerts and you have a hell of a setup.
+
+Imagine you could throw this all out and just unify it across the company. All of the major tool vendors support the full stack in one way or another after all. You chose one and migrated all of your applications. After a while you figured out that your locked into that one vendor but are missing feature X from Application Insights and feature Y & Z are not as intuitive as they were in Sentry. Dashboards are too basic and you wished Grafana still was a thing.
+
+Note: This example is not particularly target at one vendor by the way. It could be any provider really.
+
+Granted, these tools will eventually catch up with requests and unify the data that software developers can ingest and access. Nevertheless, we can already now stop relying on their advances in telemetry and increase the adoption of a uniform and open standard.
+
+I had asked some people over at NewRelic what they believed the main business will be once an open standard removes the need to create and maintain custom agents.
+Short answer was that then the vendor will be chosen by who provides the nicest visualization on top of said standard. Once ingestion is no longer witchcraft, focus can be put elsewhere.
+
+### OpenTelemetry Protocol - OTLP
+https://opentelemetry.io/docs/specs/otlp/
+First we need a standard protocol - OTLP. Implementing it allows our application to export data to different backends or collectors. Luckily, that protocol is implemented by OpenTelemetry and they offer us neat SDKs for all modern languages.
+We just have to go as deep into the standard as to be able to use the provided APIs or community plugins.
+
+## Custom Logging
+Anything that can be logged as a string goes here.
+![ot_custom_log_meme](/images/ot_custom_log_meme.png)
+
+```js
+const { logs } = require('@opentelemetry/api-logs');
+const logger = logs.getLogger('application-logger');
+
+function handleCriticalEvent(eventType, details) {
+  logger.emit({
+    severityNumber: 13,  // Critical level
+    severityText: 'CRITICAL',
+    body: `Critical event occurred: ${eventType}`,
+    attributes: {
+      'event.type': eventType,
+      'event.details': JSON.stringify(details)
+    }
+  });
+}
 ```
 
-Syntax highlighting
+## Custom Tracing
+Tracing helps you understand the path and performance of requests across your system:
+```js
+const opentelemetry = require('@opentelemetry/api');
+const tracer = opentelemetry.trace.getTracer('my-service');
 
-``` js
-var foo = function (bar) {
-  return bar++;
-};
-
-console.log(foo(5));
+async function processUserOrder(userId, orderDetails) {
+  // Create a root span for the entire operation
+  const span = tracer.startSpan('process-order');
+  
+  try {
+    span.setAttribute('user.id', userId);
+    span.setAttribute('order.size', orderDetails.items.length);
+    
+    // Simulate sub-operations
+    await validateOrder(orderDetails);
+    await processPayment(orderDetails);
+    
+    span.setStatus({ code: opentelemetry.SpanStatusCode.OK });
+  } catch (error) {
+    span.recordException(error);
+    span.setStatus({ 
+      code: opentelemetry.SpanStatusCode.ERROR, 
+      message: error.message 
+    });
+  } finally {
+    span.end();
+  }
+}
 ```
 
-## Tables
 
-| Option | Description                                                               |
-|--------|---------------------------------------------------------------------------|
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default.    |
-| ext    | extension to be used for dest files.                                      |
+## Custom Metrics
+Metrics help you track system performance and key business indicators:
 
-Right aligned columns
+```js
+const opentelemetry = require('@opentelemetry/api');
+const meter = opentelemetry.metrics.getMeter('performance-meter');
 
-| Option |                                                               Description |
-|-------:|--------------------------------------------------------------------------:|
-|   data | path to data files to supply the data that will be passed into templates. |
-| engine |    engine to be used for processing templates. Handlebars is the default. |
-|    ext |                                      extension to be used for dest files. |
+// Track API request duration
+const requestDuration = meter.createHistogram('api_request_duration', {
+  description: 'Tracks the duration of API requests'
+});
 
-## Links
+function measureApiRequestTime(duration, endpoint) {
+  requestDuration.record(duration, {
+    'api.endpoint': endpoint
+  });
+}
+```
 
-[link text](http://dev.nodeca.com)
 
-[link with title](http://nodeca.github.io/pica/demo/ "title text!")
+## Conclusion
 
-Autoconverted link https://github.com/nodeca/pica (enable linkify to see)
+OpenTelemetry transforms complex system monitoring from a nightmare into a manageable... ah ChatGPT stop being so bad at writing with a story.
+Lets conclude that OpenTelemetry is awesome. Once all observability vendors support it to the fullest, we can all benefit from a unified way to stare at data.
+Even though it might not be a fast undertaking, as more complicated features, like Session Replays in the frontend, are hard to agree on and standardize.
 
-## Images
+Having these APIs -- for Tracing, Logging and Metrics -- available allows developers to record any data themselves, removing the need to wait for tool vendors to implement a feature.
 
-![Minion](https://octodex.github.com/images/minion.png)
-![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "The Stormtroopocat")
-
-Like links, Images also have a footnote style syntax
-
-![Alt text][id]
-
-With a reference later in the document defining the URL location:
-
-[id]: https://octodex.github.com/images/dojocat.jpg  "The Dojocat"
-
-## Plugins
-
-The killer feature of `markdown-it` is very effective support of
-[syntax plugins](https://www.npmjs.org/browse/keyword/markdown-it-plugin).
-
-### [Emojies](https://github.com/markdown-it/markdown-it-emoji)
-
-> Classic markup: :wink: :cry: :laughing: :yum:
->
-> Shortcuts (emoticons): :-) :-( 8-) ;)
-
-see [how to change output](https://github.com/markdown-it/markdown-it-emoji#change-output) with twemoji.
-
-### [Subscript](https://github.com/markdown-it/markdown-it-sub) / [Superscript](https://github.com/markdown-it/markdown-it-sup)
-
-- 19^th^
-- H~2~O
-
-### [\<ins>](https://github.com/markdown-it/markdown-it-ins)
-
-++Inserted text++
-
-### [\<mark>](https://github.com/markdown-it/markdown-it-mark)
-
-==Marked text==
-
-### [Footnotes](https://github.com/markdown-it/markdown-it-footnote)
-
-Footnote 1 link[^first].
-
-Footnote 2 link[^second].
-
-Inline footnote^[Text of inline footnote] definition.
-
-Duplicated footnote reference[^second].
-
-[^first]: Footnote **can have markup**
-
-    and multiple paragraphs.
-
-[^second]: Footnote text.
-
-### [Definition lists](https://github.com/markdown-it/markdown-it-deflist)
-
-Term 1
-
-:   Definition 1
-with lazy continuation.
-
-Term 2 with *inline markup*
-
-:   Definition 2
-
-        { some code, part of Definition 2 }
-
-    Third paragraph of definition 2.
-
-_Compact style:_
-
-Term 1
-~ Definition 1
-
-Term 2
-~ Definition 2a
-~ Definition 2b
-
-### [Abbreviations](https://github.com/markdown-it/markdown-it-abbr)
-
-This is HTML abbreviation example.
-
-It converts "HTML", but keep intact partial entries like "xxxHTMLyyy" and so on.
-
-*[HTML]: Hyper Text Markup Language
-
-### [Custom containers](https://github.com/markdown-it/markdown-it-container)
-
-::: warning
-*here be dragons*
-:::
+Embrace observability, and never log errors again! 🔍

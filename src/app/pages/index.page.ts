@@ -1,5 +1,5 @@
 import { injectContentFiles } from '@analogjs/content';
-import { Component } from '@angular/core';
+import { Component, effect } from '@angular/core';
 import { BlogListEntryComponent } from '../blog-list-entry/blog-list-entry.component';
 
 import PostAttributes from '../post-attributes';
@@ -29,5 +29,10 @@ import { LogoComponent } from './index/logo/logo.component';
     `,
 })
 export default class BlogComponent {
-    readonly posts = injectContentFiles<PostAttributes>();
+    readonly posts = injectContentFiles<PostAttributes>().filter(post=> !post.attributes.draft);
+
+
+    constructor() {
+      console.log(this.posts);
+    }
 }

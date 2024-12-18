@@ -5,4 +5,5 @@ export default interface PostAttributes {
     date: string;
     coverImage?: string;
     tags?: string[];
+    draft?: boolean;
 }
