@@ -6,10 +6,9 @@ import PostAttributes from '../post-attributes';
 
 @Component({
     selector: 'blog-list-entry',
-    standalone: true,
     imports: [RouterLink, DatePipe],
     templateUrl: './blog-list-entry.component.html',
-    styleUrl: './blog-list-entry.component.scss',
+    styleUrl: './blog-list-entry.component.scss'
 })
 export class BlogListEntryComponent {
     _post = input.required<ContentFile<PostAttributes>>({ alias: 'post' });

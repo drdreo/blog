@@ -4,7 +4,6 @@ import { NavbarComponent } from './navbar.component';
 
 @Component({
     selector: 'app-root',
-    standalone: true,
     imports: [RouterOutlet, NavbarComponent],
     template: `
         <section class="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0 relative">
@@ -21,6 +20,6 @@ import { NavbarComponent } from './navbar.component';
             margin: 0 auto;
         }
     `,
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AppComponent {}

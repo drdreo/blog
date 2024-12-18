@@ -35,7 +35,6 @@ import PostAttributes from '../post-attributes';
 
 @Component({
     selector: 'app-blog-post',
-    standalone: true,
     imports: [AsyncPipe, MarkdownComponent, DatePipe],
     template: `
         @if (post$ | async; as post) {
@@ -63,7 +62,7 @@ import PostAttributes from '../post-attributes';
             max-height: 40vh;
             justify-self: center;
         }
-    `,
+    `
 })
 export default class BlogPostComponent {
     readonly post$ = injectContent<PostAttributes>('slug');

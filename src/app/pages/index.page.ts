@@ -7,7 +7,6 @@ import { LogoComponent } from './index/logo/logo.component';
 
 @Component({
     selector: 'app-blog',
-    standalone: true,
     imports: [BlogListEntryComponent, LogoComponent],
     template: `
         <blog-logo id="top" />
@@ -26,7 +25,7 @@ import { LogoComponent } from './index/logo/logo.component';
                 <blog-list-entry [post]="post"></blog-list-entry>
             }
         </ul>
-    `,
+    `
 })
 export default class BlogComponent {
     readonly posts = injectContentFiles<PostAttributes>().filter(post=> !post.attributes.draft);

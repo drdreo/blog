@@ -5,7 +5,6 @@ import { filter, map } from 'rxjs';
 
 @Component({
     selector: 'blog-nav',
-    standalone: true,
     imports: [RouterLink],
     template: `
         <nav [class]="navClass()">
@@ -18,7 +17,7 @@ import { filter, map } from 'rxjs';
         </nav>
     `,
     styles: ``,
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavbarComponent {
     private router = inject(Router);
