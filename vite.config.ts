@@ -21,7 +21,7 @@ export default defineConfig(({ mode }) => ({
                         // add more languages
                         additionalLangs: ['shellscript'],
                     },
-                },
+                }
             },
             prerender: {
                 sitemap: {

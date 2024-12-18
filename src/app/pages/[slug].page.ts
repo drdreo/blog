@@ -1,7 +1,8 @@
 import { injectContent, MarkdownComponent } from '@analogjs/content';
 import { RouteMeta } from '@analogjs/router';
-import { AsyncPipe, DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { DatePipe } from '@angular/common';
+import { Component, computed } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 import PostAttributes from '../post-attributes';
 import { postMetaResolver, postTitleResolver } from '../resolvers';
@@ -13,18 +14,21 @@ export const routeMeta: RouteMeta = {
 
 @Component({
     selector: 'app-blog-post',
-    imports: [AsyncPipe, MarkdownComponent, DatePipe],
+    imports: [MarkdownComponent, DatePipe],
     template: `
-        @if (post$ | async; as post) {
+        @let post = _post();
+        @if (post) {
             <article>
                 <div class="flex justify-center flex-col items-center">
                     <h1 class="text-5xl">{{ post.attributes.title }}</h1>
 
-                    <time
-                        class="text-xs dark:text-slate-400 text-slate-600 pb-2"
-                        [attr.datetime]="post.attributes.date | date: 'YYYY-MM-dd'"
-                        >{{ post.attributes.date | date: 'dd.MM.YYYY' }}
-                    </time>
+                    <div class="pb-2 text-xs dark:text-slate-400 text-slate-600">
+                        <time [attr.datetime]="post.attributes.date | date: 'YYYY-MM-dd'"
+                            >{{ post.attributes.date | date: 'dd.MM.YYYY' }}
+                        </time>
+                         -
+                        <time>{{ readTime() }}</time>
+                    </div>
                 </div>
                 @if (post.attributes.coverImage) {
                     <img class="post__image" [src]="post.attributes.coverImage" alt="blog cover image" />
@@ -43,5 +47,17 @@ export const routeMeta: RouteMeta = {
     `
 })
 export default class BlogPostComponent {
-    readonly post$ = injectContent<PostAttributes>('slug');
+    readonly _post = toSignal(injectContent<PostAttributes>('slug'));
+
+    readTime = computed(() => {
+        const post = this._post();
+        if (!post?.content) {
+            return undefined;
+        }
+        const text = post.content as string;
+        const wpm = 225;
+        const words = text.trim().split(/\s+/).length;
+        const time = Math.ceil(words / wpm);
+        return time + 'min';
+    });
 }
