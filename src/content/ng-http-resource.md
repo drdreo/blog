@@ -8,7 +8,7 @@ tags:
     - Angular
     - http
     - API
-coverImage: /demo-post_cover.jpg
+coverImage: /images/ng_http_resource_cover.jpg
 ---
 
 Angular docs: https://angular.dev/api/common/http/httpResource
@@ -29,15 +29,15 @@ user = httpResource(() => `/api/user/${currentUserId()}`);
 ```
 
 Every time the user id changes, the user is re-requested.
-Nice. Simple. Chapter closed. `httpClient.get` is now obsolete and we are happy.
+Nice. Simple. Chapter closed. `http.get` is now obsolete and we are happy.
 
 But what if the API you have to deal with is stubborn and does not want to be straightforward?
+
 Imagine, instead of a GET -- to _get_ data -- it's a POST endpoint. (Note: It's highly recommended to not use mutating requests with `httpResource`). Instead of returning a compatible data structure, you have to remap the DTO response. Or the backend request is just inefficient and very slow, therefore, client-side caching is required.
 
 Luckily we can solve all of these struggles with the following solutions:
 1. Configure the options to use the `POST` method
-2. Parsing the response DTO structure into a new data structure via
-   `parse?: (value: TRaw) => TResult;`
+2. Parsing the response DTO structure into a new data structure via `parse`
 3. Using Cashew with `context` enables automagical caching.
 
 
@@ -56,9 +56,14 @@ type ClientData = {
 };
 ```
 
+The endpoint we are calling is a POST request to `/api/client` with the following body:
+```json
+{
+    "clientId": 123
+}
+```
 
-## Options
-
+Then we could setup the `httpResource` like this:
 ```ts
 clientResource = httpResource<ClientData>(() => {  
     const clientId = this.clientId();  
@@ -78,7 +83,7 @@ When the API response structure differs from your client-side model, we have to 
 > Transform the result of the HTTP request before it's delivered to the resource.
 > > `parse` receives the value from the HTTP layer as its raw type (e.g. as `unknown` for JSON data). It can be used to validate or transform the type of the resource, and return a more specific type. This is also useful for validating backend responses using a runtime schema validation library such as Zod.
 
-We can pass a parse function to the resource options, and its return value will be used as the resource value. We can achieve this like the following:
+We can pass a parse function to the resource options, and its return value will be used as the resource value. This will look something like the following:
 ```ts
 clientResource = httpResource<ClientData>(  
     () => {  
@@ -135,6 +140,23 @@ clientResource = httpResource<ClientData>(
 Cashew https://github.com/ngneat/cashew
 > Caching is nut a problem!
 
+With that neat angular caching library, we can achieve caching of the response as easy as this:
+```ts
+import { withCache } from '@ngneat/cashew';
+
+clientResource = httpResource<ClientData>(() => {  
+    const clientId = this.clientId();  
+    return {  
+        url: this.apiUrl,       // URL to your API
+        method: 'POST',         // HTTP POST method
+        body: {                 // Request body (for POST)
+            clientId
+        },
+        context: withCache()    // this enables in-memory caching
+    };  
+});
+```
+Make sure to customize the cache key to your needs if you have a request body. It defaults to the request URL including any query parameters.
 
 ## Default Values
 
