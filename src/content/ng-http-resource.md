@@ -1,7 +1,7 @@
 ---
 title: "Angular: httpResource In The Wild"
 slug: http-resource-in-the-wild
-description: How to use Angular's httpResource with real-world requirements
+description: How to use Angular's httpResource with real-world requirements. Sending POST requests, parsing the response, and caching.
 date: 2025-05-06
 draft: false
 tags:
