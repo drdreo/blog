@@ -78,12 +78,12 @@ clientResource = httpResource<ClientData>(() => {
 ```
 
 ## Parsing The Response
-When the API response structure differs from your client-side model, we have to re-map it. We can achieve this with the simple `parse` option.
+When the API response structure differs from your client-side model, we have to re-map it. We can achieve this with the `parse` option.
 
 > Transform the result of the HTTP request before it's delivered to the resource.
 > > `parse` receives the value from the HTTP layer as its raw type (e.g. as `unknown` for JSON data). It can be used to validate or transform the type of the resource, and return a more specific type. This is also useful for validating backend responses using a runtime schema validation library such as Zod.
 
-We can pass a parse function to the resource options, and its return value will be used as the resource value. This will look something like the following:
+We can pass a parsing function to the resource options, and its return value will be used as the resource value. This will look something like the following:
 ```ts
 clientResource = httpResource<ClientData>(  
     () => {  
@@ -156,7 +156,7 @@ clientResource = httpResource<ClientData>(() => {
     };  
 });
 ```
-Make sure to customize the cache key to your needs if you have a request body. It defaults to the request URL including any query parameters.
+Make sure to customize the cache key to your needs if you have a request body. Otherwise, it will default to the request URL including any query parameters.
 
 ## Default Values
 
@@ -185,11 +185,11 @@ clientResource = httpResource<ClientData>(
 );
 ```
 
-This messed with me for quite some time since I did not understand why some UI elements keep flickering.
+This messed with me for quite some time -- I couldn't figure out why some UI elements kept flickering.
 
 Why `undefined` is the default is really beyond me.
 
-Rant: When we already have a value, it would make more sense to preserve it. Instead, Angular throws away the previous value, sets it to `undefined` during loading, then updates it with the new value after the request completes.
+**Rant:** When we already have a value, it would make more sense to preserve it. Instead, Angular throws away the previous value, sets it to `undefined` during loading, then updates it with the new value after the request completes.
 
 This re-triggers any dependencies or computed signal chains, which makes it annoying if `undefined` has to be handled in-between updates.
 
@@ -200,20 +200,20 @@ Anyways, `defaultValues` ... great! At least we can show something. Some data is
 
 ## Reactivity Can Suck
 
-When your dependencies are asynchronous, you must consider that dependency values can be `undefined` . These cases need to be caught early and handled in the `httpResource` to prevent unintentional requests.
+When your dependencies are asynchronous, you _should_ account for the case when they are still `undefined`. These edge cases need to be handled early in the `httpResource` to prevent unintentional requests.
 
-Multiple requests can be sent and cancelled in quick succession when you have several dependencies. For instance, when you await asynchronous data that feeds into multiple computed signals, each signal change triggers the `httpResource` to send a new request.
+Multiple requests can be triggered and cancelled in quick succession if you have several dependencies. For example, when you await asynchronous data that feeds into multiple computed signals, each signal change may re-trigger the `httpResource` and send a new request.
 The default behaviour in this scenario is that any new API request will automatically cancel the ongoing one.
 
-One thing to highlight is to NOT use `httpResource` for mutation operations (PUT, POST, DELETE).  
+One important point to highlight: **don't use `httpResource` for mutation operations** (PUT, POST, DELETE).  
 A subsequent update could cancel a previous request before it completes, potentially causing data loss.
 
 ## Summary
-All these edge cases I have highlighted here should not deter one from using the new `httpResource` API. I prefer this way over the imperative `toSignal(http.get())` approach. The built-in handling for loading states and errors is very convenient.
+All these edge cases shouldn't stop you from trying the new httpResource API. I prefer this way now over the imperative `toSignal(http.get())` approach. The built-in loading and error handling is _very_ convenient.
 
-Additionally, automatically syncing reactive data with an HTTP resource (good naming) feels really good. No more updating complex query objects and then manually calling service methods to re-trigger http calls.
+Plus, automatically syncing reactive data with an HTTP resource (great naming btw) just feels right. No more updating complex query objects and manually calling service methods to re-trigger http calls.
 
-I have used it so far in a semi-complex production Analytics application and was positively surprised by how well it integrates with an NgRx signal store.
+I have used it so far in a semi-complex production Analytics application and was positively surprised by how well it integrates with an NgRx signal store and how it made my life way easier and more predictable.
 
 # TL;DR
 
