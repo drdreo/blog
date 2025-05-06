@@ -28,7 +28,7 @@ import { LogoComponent } from './index/logo/logo.component';
     `
 })
 export default class BlogComponent {
-    readonly posts = injectContentFiles<PostAttributes>().filter(
+    readonly posts = injectContentFiles<PostAttributes>(
         (post) => !post.attributes.draft || import.meta.env.DEV
     );
 }

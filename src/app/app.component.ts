@@ -6,7 +6,7 @@ import { NavbarComponent } from './navbar.component';
     selector: 'app-root',
     imports: [RouterOutlet, NavbarComponent],
     template: `
-        <section class="mx-auto max-w-3xl px-4 sm:px-6 xl:max-w-5xl xl:px-0 relative">
+        <section class="mx-auto max-w-3xl px-4 sm:px-6 xl:px-0 relative">
             <blog-nav />
 
             <main class="mt-8">

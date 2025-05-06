@@ -1,7 +1,7 @@
 ---
-title: httpResource In The Wild
+title: "Angular: httpResource In The Wild"
 slug: http-resource-in-the-wild
-description: How to use httpResource with real-world requirements
+description: How to use Angular's httpResource with real-world requirements
 date: 2025-05-06
 draft: false
 tags:
@@ -19,7 +19,7 @@ They will introduce you to the new API and showcase the configuration.
 The goal of this post is to showcase the real-world scenario where APIs are not perfect and unexpected requirements come out of the blue.
 
 **TL;DR** It replaces using the http client directly to **get** and automatically re-request data.
-> Create a `[Resource](https://angular.dev/api/core/Resource)` that fetches data with an HTTP GET request to the given URL.
+> Create a [Resource](https://angular.dev/api/core/Resource) that fetches data with an HTTP GET request to the given URL.
 >
 > If a reactive function is passed for the URL, the resource will update when the URL changes via signals.
 
@@ -75,11 +75,8 @@ clientResource = httpResource<ClientData>(() => {
 ## Parsing The Response
 When the API response structure differs from your client-side model, we have to re-map it. We can achieve this with the simple `parse` option.
 
-`parse` documentation:
-
 > Transform the result of the HTTP request before it's delivered to the resource.
->
-	`parse` receives the value from the HTTP layer as its raw type (e.g. as `unknown` for JSON data). It can be used to validate or transform the type of the resource, and return a more specific type. This is also useful for validating backend responses using a runtime schema validation library such as Zod.
+> > `parse` receives the value from the HTTP layer as its raw type (e.g. as `unknown` for JSON data). It can be used to validate or transform the type of the resource, and return a more specific type. This is also useful for validating backend responses using a runtime schema validation library such as Zod.
 
 We can pass a parse function to the resource options, and its return value will be used as the resource value. We can achieve this like the following:
 ```ts
@@ -105,13 +102,11 @@ clientResource = httpResource<ClientData>(
 );
 ```
 
-`parse: (value: unknown): ClientData {}`
-
-We have to resort to `unknown` and type casting for the DTO argument since the `TRaw` argument is not yet properly typeable on the options `parse?: (value: TRaw) => TResult;`.
+We have to resort to `unknown` and type casting for the DTO since the `TRaw` argument is not yet properly typeable on the options `parse?: (value: TRaw) => TResult;`.
 
 I hope that the resource generics will allow typing HTTP response and resource value like the following in the future: `httpResource<ClientDTO, ClientData>()` , but for now, `unknown` it is.
 
-#### Zod Parsing
+### Zod Parsing
 For those who prefer using validation libraries, Zod can be directly used as a parser.
 
 ```ts
@@ -145,10 +140,8 @@ Cashew https://github.com/ngneat/cashew
 
 Using `defaultValue` comes in handy when you expect the data to not become `undefined` and always adhere to a certain type. Because by default, `httpResource` resets its value to `undefined`.
 
-`defaultValue` documentation:
-
 > Value that the resource will take when in Idle, Loading, or Error states.
-> If not set, the resource will use `undefined` as its default value.
+> If not set, the resource will use `undefined` as its default value.
 
 ```ts
 clientResource = httpResource<ClientData>(  
@@ -190,21 +183,26 @@ When your dependencies are asynchronous, you must consider that dependency value
 Multiple requests can be sent and cancelled in quick succession when you have several dependencies. For instance, when you await asynchronous data that feeds into multiple computed signals, each signal change triggers the `httpResource` to send a new request.
 The default behaviour in this scenario is that any new API request will automatically cancel the ongoing one.
 
-One thing to highlight is to NOT use `httpResource` for mutation operations (PUT, POST, DELETE).  
-A subsequent update could cancel a previous request before it completes, potentially causing data loss.
+One thing to highlight is to NOT use `httpResource` for mutation operations (PUT, POST, DELETE).  
+A subsequent update could cancel a previous request before it completes, potentially causing data loss.
 
 ## Summary
-All these edge cases I have highlighted here should not deter one from using the new `httpResource` API. I prefer this way over the imperative `toSignal(http.get())` approach. The built-in handling for loading states and errors is really convenient.
+All these edge cases I have highlighted here should not deter one from using the new `httpResource` API. I prefer this way over the imperative `toSignal(http.get())` approach. The built-in handling for loading states and errors is very convenient.
 
-Additionally, automatically syncing reactive data with an HTTP resource (good naming) feels really good. No more updating complex query objects and then manually calling a service methods to re-trigger http calls.
+Additionally, automatically syncing reactive data with an HTTP resource (good naming) feels really good. No more updating complex query objects and then manually calling service methods to re-trigger http calls.
 
 I have used it so far in a semi-complex production Analytics application and was positively surprised by how well it integrates with an NgRx signal store.
 
 # TL;DR
 
-✔️ Use `httpResource()` for fetching data
-❌ Avoid using it for mutations
-⏸️ Early returning `undefined` prevents http requests to be sent
+✔️ Use `httpResource()` for fetching data
+
+❌ Avoid using it for mutations
+
+⏸️ Early returning `undefined` prevents http requests to be sent
+
 🟰 Use `equal` to prevent unintentional emits.
+
 ❔ Use `defaultValue` to prevent `undefined` values
-💱 Use `parse` to parse API data structure.
+
+💱 Use `parse` to parse API data structure.
